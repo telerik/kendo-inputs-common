@@ -1,3 +1,4 @@
-import Feature from './Feature';
+import SliderModel from './SliderModel';
+import util from './util';
 
-module.exports = Feature;
+export { SliderModel, util };

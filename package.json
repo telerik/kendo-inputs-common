@@ -1,11 +1,11 @@
 {
-  "name": "@telerik/kendo-package-base",
-  "description": "Kendo UI NPM Package starter template",
+  "name": "@telerik/kendo-slider-common",
+  "description": "Kendo UI Slider common package",
   "repository": {
     "type": "git",
-    "url": "https://github.com/telerik/kendo-package-base.git"
+    "url": "https://github.com/telerik/kendo-slider-common.git"
   },
-  "main": "dist/npm/js/Feature.js",
+  "main": "dist/npm/js/bundle.js",
   "scripts": {
     "build-package": "gulp build-npm-package",
     "test": "gulp test",

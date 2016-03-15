@@ -1,1 +1,1 @@
-require('@telerik/kendo-package-tasks')(require('gulp'), 'kendo-package-base');
+require('@telerik/kendo-package-tasks')(require('gulp'), 'kendo-slider-common');
