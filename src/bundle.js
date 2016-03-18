@@ -1,4 +1,2 @@
-import SliderModel from './SliderModel';
-import util from './util';
-
-export { SliderModel, util };
+export { default as SliderModel } from './SliderModel';
+export { default as Util } from './util';

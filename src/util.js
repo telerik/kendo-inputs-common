@@ -89,12 +89,12 @@ const calculateHandlePosition = ({ handleWidth, trackWidth, min, max, value }) =
 };
 
 const decreaseValueToStep = ({ max, min, smallStep, value }) => {
+    let result;
     if (value % smallStep === 0) {
-        return value - smallStep;
+        result = value - smallStep;
+    } else {
+        result = value - (value % smallStep);
     }
-
-    const result = value - (value % smallStep);
-
     return trimValue(max, min, result);
 };
 
