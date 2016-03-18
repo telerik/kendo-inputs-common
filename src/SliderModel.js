@@ -33,13 +33,13 @@ class SliderModel {
         this.track.style[orientation] = `${trackWidth}px`;
     }
 
-    resizeTicks(ticksConainer, ticks) {
+    resizeTicks(ticksContainer, ticks) {
         const dimension = this.props.vertical ? "height" : "width";
 
         [ ...ticks ].map((tick, index) => tick.style[dimension] = `${this.tickSizes[index]}px`);
 
         if (this.props.vertical) {
-            this.adjustPadding(ticksConainer);
+            this.adjustPadding(ticksContainer);
         }
     }
 
@@ -81,14 +81,14 @@ class SliderModel {
         selection.style[dimension] = `${handleOffset + handleWidth}px`;
     }
 
-    adjustPadding(ticksConainer) {
+    adjustPadding(ticksContainer) {
         const totalTickSize = this.tickSizes.reduce((prev, curr) => prev + curr, 0);
         const trackWidth = this.trackWidth();
         const reminder = trackWidth - totalTickSize;
 
         if (reminder !== 0) {
             const padding = reminder + this.elementOffset(this.track);
-            ticksConainer.style.paddingTop = `${padding}px`;
+            ticksContainer.style.paddingTop = `${padding}px`;
         }
     }
 
