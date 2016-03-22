@@ -1,4 +1,4 @@
-import util from './SliderUtil';
+import SliderUtil from './SliderUtil';
 
 class SliderModel {
     constructor(props, wrapper, track) {
@@ -12,15 +12,15 @@ class SliderModel {
         const { max, min, smallStep } = this.props;
         const trackWidth = this.trackWidth();
 
-        return util.calculateTickSizes(trackWidth, min, max, smallStep);
+        return SliderUtil.calculateTickSizes(trackWidth, min, max, smallStep);
     }
 
     trackWidth() {
         if (this.props.fixedTickWidth) {
-            return util.calculateFixedTrackSize(this.props);
+            return SliderUtil.calculateFixedTrackSize(this.props);
         }
 
-        return util.calculateTrackSize(
+        return SliderUtil.calculateTrackSize(
             this.elementSize(this.wrapper),
             this.elementOffset(this.track)
         );
@@ -46,8 +46,8 @@ class SliderModel {
     resizeWrapper() {
         const dimension = this.props.vertical ? "height" : "width";
         const wrapperSize = this.elementSize(this.wrapper);
-        const trackWidth = util.calculateTrackSize(wrapperSize, this.elementOffset(this.track));
-        const fixedTrackWidth = util.calculateFixedTrackSize(this.props);
+        const trackWidth = SliderUtil.calculateTrackSize(wrapperSize, this.elementOffset(this.track));
+        const fixedTrackWidth = SliderUtil.calculateFixedTrackSize(this.props);
 
         if (trackWidth > fixedTrackWidth) {
             this.wrapper.style[dimension] = `${ wrapperSize - (trackWidth - fixedTrackWidth)}px`;
@@ -60,9 +60,9 @@ class SliderModel {
         const { max, min, vertical } = this.props;
         const position = vertical ? 'bottom' : 'left';
         const trackWidth = this.trackWidth();
-        const value = util.trimValue(max, min, this.props.value);
+        const value = SliderUtil.trimValue(max, min, this.props.value);
 
-        const handlePosition = util.calculateHandlePosition({
+        const handlePosition = SliderUtil.calculateHandlePosition({
             min,
             max,
             value,
