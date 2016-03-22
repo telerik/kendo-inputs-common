@@ -1,2 +1,2 @@
-export { default as SliderModel } from './SliderModel';
-export { default as SliderUtil } from './SliderUtil';
+export SliderModel from './SliderModel';
+export SliderUtil from './SliderUtil';

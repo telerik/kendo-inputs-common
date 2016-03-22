@@ -1,5 +1,6 @@
 {
   "name": "@telerik/kendo-inputs-common",
+  "version": "0.1.0",
   "description": "Kendo UI Inputs common package",
   "repository": {
     "type": "git",
