@@ -1,9 +1,9 @@
 {
-  "name": "@telerik/kendo-slider-common",
-  "description": "Kendo UI Slider common package",
+  "name": "@telerik/kendo-inputs-common",
+  "description": "Kendo UI Inputs common package",
   "repository": {
     "type": "git",
-    "url": "https://github.com/telerik/kendo-slider-common.git"
+    "url": "https://github.com/telerik/kendo-inputs-common.git"
   },
   "main": "dist/npm/js/bundle.js",
   "scripts": {
