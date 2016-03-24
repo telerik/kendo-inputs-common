@@ -7,6 +7,7 @@
     "url": "https://github.com/telerik/kendo-inputs-common.git"
   },
   "main": "dist/npm/js/bundle.js",
+  "typings": "dist/npm/js/bundle",
   "scripts": {
     "build-package": "gulp build-npm-package",
     "test": "gulp test",
