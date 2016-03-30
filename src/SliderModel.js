@@ -36,7 +36,7 @@ class SliderModel {
     resizeTicks(ticksContainer, ticks) {
         const dimension = this.props.vertical ? "height" : "width";
 
-        [ ...ticks ].map((tick, index) => tick.style[dimension] = `${this.tickSizes[index]}px`);
+        Array.prototype.slice.call(ticks).map((tick, index) => tick.style[dimension] = `${this.tickSizes[index]}px`);
 
         if (this.props.vertical) {
             this.adjustPadding(ticksContainer);
