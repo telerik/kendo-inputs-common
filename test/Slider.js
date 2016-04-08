@@ -162,4 +162,20 @@ describe('Slider Math', () => {
         const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
         expect(value).toEqual(8);
     });
+
+    it('snaps the value to the closest tick on the left', () => {
+        const props = { max: 3, min: 0, smallStep: 1 };
+        const wrapperOffset = 22;
+        const length = 230;
+        const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+        expect(value).toEqual(0);
+    });
+
+    it('snaps the value to the closest tick on the right', () => {
+        const props = { max: 3, min: 0, smallStep: 1 };
+        const wrapperOffset = 56;
+        const length = 230;
+        const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+        expect(value).toEqual(1);
+    });
 });

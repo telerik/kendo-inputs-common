@@ -51,7 +51,7 @@ const valueFromTrack = (props, wrapperOffset, length) => {
     let value = max;
 
     if (clickOffset < maxOffset) {
-        value = Math.floor(((wrapperOffset) / length) * distance + min);
+        value = Math.round(((wrapperOffset) / length) * distance + min);
     }
 
     return snapValue(extendProps(props, { value }));
