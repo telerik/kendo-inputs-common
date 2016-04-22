@@ -51,9 +51,8 @@ const valueFromTrack = (props, wrapperOffset, length) => {
     let value = max;
 
     if (clickOffset < maxOffset) {
-        value = Math.round(((wrapperOffset) / length) * distance + min);
+        value = (wrapperOffset / length) * distance + min;
     }
-
     return snapValue(extendProps(props, { value }));
 };
 
@@ -84,7 +83,6 @@ const calculateTickSizes = (trackSize, min, max, step) => {
 const calculateHandlePosition = ({ handleWidth, trackWidth, min, max, value }) => {
     const halfHandleWidth = Math.floor(handleWidth / 2);
     const step = trackWidth / Math.abs(max - min);
-
     return Math.floor((step * (value - min)) - halfHandleWidth);
 };
 
