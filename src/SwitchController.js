@@ -30,7 +30,7 @@ class SwitchController {
         this.updateView(this.updateModel(checked ? this.constrain : 0, animate));
     }
 
-    change(checked) {
+    change = (checked) => {
         this.checked = checked;
 
         this.updateView(this.updateModel(checked ? this.constrain : 0));
