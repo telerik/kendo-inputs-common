@@ -54,6 +54,15 @@ class SwitchController {
         return value;
     };
 
+    addAnimation = (model) => {
+        if (model.transition === true) {
+            model.transition = 'all 200ms ease-out';
+        } else {
+            model.transition = 'none';
+        }
+        return model;
+    }
+
     onPress = ({ pageX }) => {
         this.lastPressX = this.originalPressX = pageX;
     }
