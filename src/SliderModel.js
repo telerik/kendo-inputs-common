@@ -50,9 +50,9 @@ class SliderModel {
         const fixedTrackWidth = SliderUtil.calculateFixedTrackSize(this.props);
 
         if (trackWidth > fixedTrackWidth) {
-            this.wrapper.style[dimension] = `${ wrapperSize - (trackWidth - fixedTrackWidth)}px`;
+            this.wrapper.parentElement.style[dimension] = `${ wrapperSize - (trackWidth - fixedTrackWidth)}px`;
         } else {
-            this.wrapper.style[dimension] = `${ wrapperSize + (fixedTrackWidth - trackWidth)}px`;
+            this.wrapper.parentElement.style[dimension] = `${ wrapperSize + (fixedTrackWidth - trackWidth)}px`;
         }
     }
 
