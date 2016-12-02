@@ -13,6 +13,68 @@ class SwitchController {
 
         this.updateView = updateView;
         this.onChange = onChange;
+
+        this.change = (checked) => {
+            this.checked = checked;
+
+            this.updateView(this.updateModel(checked ? this.constrain : 0));
+
+            this.onChange(checked);
+        };
+
+        this.limit = (value) => {
+            if (value > this.constrain) {
+                return this.constrain;
+            }
+
+            if (value < 0) {
+                return 0;
+            }
+
+            return value;
+        };
+
+        this.addAnimation = (model) => {
+            if (model.transition === true) {
+                model.transition = 'all 200ms ease-out';
+            } else {
+                model.transition = 'none';
+            }
+            return model;
+        };
+
+        this.onPress = ({ pageX }) => {
+            this.lastPressX = this.originalPressX = pageX;
+        };
+
+        this.onRelease = ({ pageX }) => {
+            const delta = Math.abs(this.originalPressX - pageX);
+            const snapPoint = this.constrain / 2;
+            const checked = delta < DEFAULT_THRESHOLD ? !this.checked : this.handlePosition > snapPoint;
+
+            this.change(checked);
+        };
+
+        this.onDrag = ({ pageX }) => {
+            const { left, right } = this.coords;
+            const overElement = pageX > left && pageX < right;
+
+            if (overElement) {
+                const delta = pageX - this.lastPressX;
+                const position = this.limit(this.handlePosition + delta);
+
+                this.lastPressX = pageX;
+                this.handlePosition = position;
+                this.updateView(this.updateModel(this.handlePosition));
+            }
+            if (pageX > right) {
+                this.updateView(this.updateModel(this.constrain));
+            }
+
+            if (pageX < left) {
+                this.updateView(this.updateModel(0));
+            }
+        };
     }
 
     get constrain() {
@@ -30,70 +92,8 @@ class SwitchController {
         this.updateView(this.updateModel(checked ? this.constrain : 0, animate));
     }
 
-    change = (checked) => {
-        this.checked = checked;
-
-        this.updateView(this.updateModel(checked ? this.constrain : 0));
-
-        this.onChange(checked);
-    }
-
     updateModel(position, animate = true) {
         return new Model(position, animate);
-    }
-
-    limit = (value) => {
-        if (value > this.constrain) {
-            return this.constrain;
-        }
-
-        if (value < 0) {
-            return 0;
-        }
-
-        return value;
-    };
-
-    addAnimation = (model) => {
-        if (model.transition === true) {
-            model.transition = 'all 200ms ease-out';
-        } else {
-            model.transition = 'none';
-        }
-        return model;
-    }
-
-    onPress = ({ pageX }) => {
-        this.lastPressX = this.originalPressX = pageX;
-    }
-
-    onRelease = ({ pageX }) => {
-        const delta = Math.abs(this.originalPressX - pageX);
-        const snapPoint = this.constrain / 2;
-        const checked = delta < DEFAULT_THRESHOLD ? !this.checked : this.handlePosition > snapPoint;
-
-        this.change(checked);
-    }
-
-    onDrag = ({ pageX }) => {
-        const { left, right } = this.coords;
-        const overElement = pageX > left && pageX < right;
-
-        if (overElement) {
-            const delta = pageX - this.lastPressX;
-            const position = this.limit(this.handlePosition + delta);
-
-            this.lastPressX = pageX;
-            this.handlePosition = position;
-            this.updateView(this.updateModel(this.handlePosition));
-        }
-        if (pageX > right) {
-            this.updateView(this.updateModel(this.constrain));
-        }
-
-        if (pageX < left) {
-            this.updateView(this.updateModel(0));
-        }
     }
 }
 

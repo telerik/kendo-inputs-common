@@ -22,6 +22,7 @@ before_install:
   - npm i -g npm@^3.8.0
 before_script:
   - npm prune
+  - npm update
 script:
   - npm run lint
   - npm run test
