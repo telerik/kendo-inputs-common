@@ -60,7 +60,7 @@ class SwitchController {
             const overElement = pageX > left && pageX < right;
 
             if (overElement) {
-                const delta = pageX - this.lastPressX;
+                const delta = this.reverse ? this.lastPressX - pageX : pageX - this.lastPressX;
                 const position = this.limit(this.handlePosition + delta);
 
                 this.lastPressX = pageX;
@@ -68,11 +68,11 @@ class SwitchController {
                 this.updateView(this.updateModel(this.handlePosition));
             }
             if (pageX > right) {
-                this.updateView(this.updateModel(this.constrain));
+                this.updateView(this.updateModel(this.reverse ? 0 : this.constrain));
             }
 
             if (pageX < left) {
-                this.updateView(this.updateModel(0));
+                this.updateView(this.updateModel(this.reverse ? 0 : this.constrain));
             }
         };
     }
@@ -81,19 +81,21 @@ class SwitchController {
         return this.wrapperOffset - this.handleOffset - this.handleMargin;
     }
 
-    updateState({ wrapperOffset, handleOffset, checked, animate = true, coords, handleMargin }) {
+    updateState({ wrapperOffset, handleOffset, checked, animate = true, coords, handleMargin, reverse }) {
         this.wrapperOffset = wrapperOffset;
         this.handleOffset = handleOffset;
         this.coords = coords;
         this.handleMargin = handleMargin;
 
         this.checked = checked;
+        this.reverse = reverse;
 
         this.updateView(this.updateModel(checked ? this.constrain : 0, animate));
     }
 
     updateModel(position, animate = true) {
-        return new Model(position, animate);
+        let pos = this.reverse ? this.wrapperOffset / 2 - position : position;
+        return new Model(pos, animate);
     }
 }
 

@@ -115,6 +115,87 @@ describe('SwitchController', () => {
         expect(model.handle.transition).toEqual(true);
         expect(model.handle.transform).toEqual('translateX(0px)');
     });
+
+    it('should calculate transform', () => {
+        let model = null;
+        const updateView = (args) => { model = args; };
+
+        const controller = new SwitchController(updateView);
+        controller.updateState({
+            wrapperOffset: 60,
+            handleOffset: 20,
+            handleMargin: 0
+        });
+
+        expect(model.handle.transform).toBe('translateX(0px)');
+    });
+
+    it('should calculate transform when checked', () => {
+        let model = null;
+        const updateView = (args) => { model = args; };
+
+        const controller = new SwitchController(updateView);
+        controller.updateState({
+            wrapperOffset: 60,
+            handleOffset: 20,
+            handleMargin: 10,
+            checked: true
+        });
+
+        expect(model.handle.transform).toBe('translateX(30px)');
+    });
+
+    describe('in rtl mode', () => {
+        it('should calculate transform', () => {
+            let model = null;
+            const updateView = (args) => { model = args; };
+
+            const controller = new SwitchController(updateView);
+            controller.updateState({
+                wrapperOffset: 60,
+                reverse: true
+            });
+
+            expect(model.handle.transform).toBe('translateX(30px)');
+        });
+
+        it('should calculate transform when checked', () => {
+            let model = null;
+            const updateView = (args) => { model = args; };
+
+            const controller = new SwitchController(updateView);
+            controller.updateState({
+                wrapperOffset: 60,
+                handleOffset: 20,
+                handleMargin: 10,
+                reverse: true,
+                checked: true
+            });
+
+            expect(model.handle.transform).toBe('translateX(0px)');
+        });
+
+        it('should update model on drag', () => {
+            let model = null;
+            const updateView = (args) => {
+                model = args;
+            };
+            const change = () => { /*noop*/ };
+
+            const controller = new SwitchController(updateView, change);
+            controller.updateState({
+                wrapperOffset: 60,
+                handleOffset: 20,
+                handleMargin: 10,
+                reverse: true
+            });
+            controller.onPress({ pageX: 5 });
+            controller.onRelease({ pageX: 10 });
+            expect(model.handle.transition).toEqual(true);
+            expect(model.handle.transform).toEqual('translateX(30px)');
+        });
+
+    });
 });
 
 const transition = 'all 200ms ease-out';
