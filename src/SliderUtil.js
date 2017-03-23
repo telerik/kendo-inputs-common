@@ -48,14 +48,11 @@ const valueFromTrack = (props, wrapperOffset, length) => {
     const clickOffset = wrapperOffset / length;
     const maxTickValue = distance - (distance % smallStep);
     const maxOffset = (100 / distance) * maxTickValue / 100;
+    const absValue = (wrapperOffset / length) * distance;
     let value = max;
 
     if (clickOffset < maxOffset) {
-        value = (wrapperOffset / length) * distance + min;
-
-        if (reverse) {
-            value = max - (wrapperOffset / length) * distance;
-        }
+        value = reverse ? max - absValue : absValue + min;
     }
 
     return snapValue(extendProps(props, { value }));
@@ -88,11 +85,12 @@ const calculateTickSizes = (trackSize, min, max, step) => {
 const calculateHandlePosition = ({ handleWidth, trackWidth, min, max, reverse, value }) => {
     const halfHandleWidth = Math.floor(handleWidth / 2);
     const step = trackWidth / Math.abs(max - min);
+    let pos = step * (value - min);
     if (reverse) {
-        return Math.floor(trackWidth - halfHandleWidth - step * (value - min));
+        pos = trackWidth - pos;
     }
 
-    return Math.floor((step * (value - min)) - halfHandleWidth);
+    return Math.floor(pos - halfHandleWidth);
 };
 
 const decreaseValueToStep = ({ max, min, smallStep, value }) => {
