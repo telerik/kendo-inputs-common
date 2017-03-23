@@ -1,6 +1,6 @@
 import SliderUtil from '../src/SliderUtil';
 
-describe('Slider Math', () => {
+describe('SliderUtil', () => {
     it('calculate slider track width', () => {
         const width = SliderUtil.calculateTrackSize(130, 34);
         expect(width).toEqual(60);
@@ -146,36 +146,117 @@ describe('Slider Math', () => {
         expect(ticks[1]).toEqual(30);
     });
 
-    it('value from track is calulated to max possible value', () => {
-        const props = { max: 10, min: 0, smallStep: 2 };
-        const wrapperOffset = 120;
-        const left = 40;
-        const length = 130;
-        const value = SliderUtil.valueFromTrack(props, wrapperOffset, left, length);
-        expect(value).toEqual(10);
+    describe('calculateValueFromTrack', () => {
+        let length;
+        let props;
+
+        beforeEach(() => {
+            length = 130;
+            props = { max: 10, min: 0, smallStep: 2 };
+        });
+
+        it('should calulate min possible value', () => {
+            const wrapperOffset = 0;
+            const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+            expect(value).toEqual(0);
+        });
+
+        it('should calulate max possible value', () => {
+            const wrapperOffset = 120;
+            const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+            expect(value).toEqual(10);
+        });
+
+        it('should calculate step value', () => {
+            const wrapperOffset = 100;
+            const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+            expect(value).toEqual(8);
+        });
+
+        it('should snap the value to the closest tick on the left', () => {
+            props = { max: 3, min: 0, smallStep: 1 };
+            const wrapperOffset = 22;
+            const length = 230;
+            const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+            expect(value).toEqual(0);
+        });
+
+        it('should snap the value to the closest tick on the right', () => {
+            props = { max: 3, min: 0, smallStep: 1 };
+            const wrapperOffset = 56;
+            const length = 230;
+            const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+            expect(value).toEqual(1);
+        });
+
+        describe('with reversed direction', () => {
+            beforeEach(() => {
+                props.reverse = true;
+            });
+
+            it('should calulate min possible value', () => {
+                const wrapperOffset = 120;
+                const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+                expect(value).toEqual(0);
+            });
+
+            it('should calulate max possible value', () => {
+                const wrapperOffset = 0;
+                const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+                expect(value).toEqual(10);
+            });
+
+            it('should calculate step value', () => {
+                const wrapperOffset = 100;
+                const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
+                expect(value).toEqual(2);
+            });
+        });
     });
 
-    it('value from track is calulated to step value', () => {
-        const props = { max: 10, min: 0, smallStep: 2 };
-        const wrapperOffset = 100;
-        const length = 130;
-        const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
-        expect(value).toEqual(8);
-    });
+    describe('calculateValueFromTick', () => {
+        const calculateValueFromTick = SliderUtil.calculateValueFromTick;
+        let props;
 
-    it('snaps the value to the closest tick on the left', () => {
-        const props = { max: 3, min: 0, smallStep: 1 };
-        const wrapperOffset = 22;
-        const length = 230;
-        const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
-        expect(value).toEqual(0);
-    });
+        beforeEach(() => {
+            props = {
+                min: 0,
+                max: 10,
+                smallStep: 1,
+                reverse: false,
+                vertical: false
+            };
+        });
 
-    it('snaps the value to the closest tick on the right', () => {
-        const props = { max: 3, min: 0, smallStep: 1 };
-        const wrapperOffset = 56;
-        const length = 230;
-        const value = SliderUtil.valueFromTrack(props, wrapperOffset, length);
-        expect(value).toEqual(1);
+        it('calculates value', () => {
+            expect(calculateValueFromTick(4, props)).toBe(4);
+        });
+
+        it('calculates min value', () => {
+            expect(calculateValueFromTick(0, props)).toBe(0);
+        });
+
+        it('calculates max value', () => {
+            expect(calculateValueFromTick(10, props)).toBe(10);
+        });
+
+        describe('with reversed direction', () => {
+            beforeEach(() => {
+                props.reverse = true;
+            });
+
+            it('calculates value', () => {
+                expect(calculateValueFromTick(4, props)).toBe(6);
+            });
+
+            it('calculates min value', () => {
+                expect(calculateValueFromTick(0, props)).toBe(10);
+            });
+
+            it('calculates max value', () => {
+                expect(calculateValueFromTick(10, props)).toBe(0);
+            });
+
+        });
     });
 });

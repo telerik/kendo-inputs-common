@@ -20,10 +20,10 @@ const calculateAreasCount = (max = 0, min = 0, smallStep = 1) => {
     return Math.floor(Math.abs(min - max) / smallStep);
 };
 
-const calculateValueFromTick = (index, { max, min, smallStep, vertical }) => {
+const calculateValueFromTick = (index, { max, min, smallStep, reverse, vertical }) => {
     const value = min + (index * smallStep);
 
-    return vertical ? Math.abs(value - max) : value;
+    return vertical || reverse ? Math.abs(value - max) : value;
 };
 
 const calculateValueFromTrack = (clientRect, pageOffset, props) => {
@@ -43,16 +43,18 @@ const calculateValueFromTrack = (clientRect, pageOffset, props) => {
 };
 
 const valueFromTrack = (props, wrapperOffset, length) => {
-    const { max, min, smallStep } = props;
+    const { max, min, reverse, smallStep } = props;
     const distance = max - min;
     const clickOffset = wrapperOffset / length;
     const maxTickValue = distance - (distance % smallStep);
     const maxOffset = (100 / distance) * maxTickValue / 100;
+    const absValue = (wrapperOffset / length) * distance;
     let value = max;
 
     if (clickOffset < maxOffset) {
-        value = (wrapperOffset / length) * distance + min;
+        value = reverse ? max - absValue : absValue + min;
     }
+
     return snapValue(extendProps(props, { value }));
 };
 
@@ -80,10 +82,15 @@ const calculateTickSizes = (trackSize, min, max, step) => {
     return result;
 };
 
-const calculateHandlePosition = ({ handleWidth, trackWidth, min, max, value }) => {
+const calculateHandlePosition = ({ handleWidth, trackWidth, min, max, reverse, value }) => {
     const halfHandleWidth = Math.floor(handleWidth / 2);
     const step = trackWidth / Math.abs(max - min);
-    return Math.floor((step * (value - min)) - halfHandleWidth);
+    let pos = step * (value - min);
+    if (reverse) {
+        pos = trackWidth - pos;
+    }
+
+    return Math.floor(pos - halfHandleWidth);
 };
 
 const decreaseValueToStep = ({ max, min, smallStep, value }) => {

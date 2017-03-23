@@ -57,7 +57,7 @@ class SliderModel {
     }
 
     positionHandle(dragHandle) {
-        const { max, min, vertical } = this.props;
+        const { max, min, reverse, vertical } = this.props;
         const position = vertical ? 'bottom' : 'left';
         const trackWidth = this.trackWidth();
         const value = SliderUtil.trimValue(max, min, this.props.value);
@@ -65,6 +65,7 @@ class SliderModel {
         this.handlePosition = SliderUtil.calculateHandlePosition({
             min,
             max,
+            reverse,
             value,
             trackWidth,
             handleWidth: dragHandle.offsetWidth
@@ -74,10 +75,16 @@ class SliderModel {
     }
 
     positionSelection(dragHandle, selection) {
-        const dimension = this.props.vertical ? 'height' : 'width';
+        const { reverse, vertical } = this.props;
+        const dimension = vertical ? 'height' : 'width';
         const handleWidth = Math.floor(dragHandle.offsetWidth / 2);
+        let size = this.handlePosition + handleWidth;
 
-        selection.style[dimension] = `${this.handlePosition + handleWidth}px`;
+        if (reverse) {
+            size = this.trackWidth() - size;
+        }
+
+        selection.style[dimension] = `${size}px`;
     }
 
     adjustPadding(ticksContainer) {
