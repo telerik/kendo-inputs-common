@@ -1,9 +1,9 @@
 const calculateFixedTrackSize = ({ max, min, smallStep, fixedTickWidth }) =>
     ((max - min) / smallStep) * fixedTickWidth;
 
-const calculateTrackSize = (wrapperWidth, offset) => {
+const calculateTrackSize = (wrapperWidth, offset, showButtons = true) => {
     const BUTTONS_COUNT = 2;
-    const trackOffset = parseFloat(offset, 10) * BUTTONS_COUNT;
+    const trackOffset = showButtons ? parseFloat(offset, 10) * BUTTONS_COUNT : 0;
     const trackWidth = wrapperWidth - trackOffset - BUTTONS_COUNT;
 
     return trackWidth;
