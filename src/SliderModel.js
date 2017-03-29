@@ -22,7 +22,8 @@ class SliderModel {
 
         return SliderUtil.calculateTrackSize(
             this.elementSize(this.wrapper),
-            this.elementOffset(this.track)
+            this.elementOffset(this.track),
+            this.props.buttons
         );
     }
 
