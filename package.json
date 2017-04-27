@@ -22,6 +22,7 @@
   "dependencies": {},
   "devDependencies": {
     "@telerik/eslint-config": "^1.0.0",
+    "@krux/condition-jenkins": "1.0.1",
     "cz-conventional-changelog": "^1.1.5",
     "ghooks": "^1.0.3",
     "gulp": "3.9.0",
@@ -54,6 +55,17 @@
       ],
       "warnOnFail": false,
       "maxSubjectLength": 100
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/telerik/kendo-inputs-common.git"
+  },
+  "release": {
+    "branch": "master",
+    "debug": false,
+    "verifyConditions": {
+      "path": "./node_modules/@krux/condition-jenkins"
     }
   }
 }
