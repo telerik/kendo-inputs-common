@@ -37,7 +37,7 @@ describe('SliderModel', () => {
 
     it('should position handle at value', () => {
         model.positionHandle(dragHandle);
-        expect(dragHandle.style.left).toBe('40px');
+        expect(dragHandle.style.left).toBe('41px');
     });
 
     it('should position handle at min value', () => {
@@ -51,7 +51,7 @@ describe('SliderModel', () => {
         props.value = 10;
 
         model.positionHandle(dragHandle);
-        expect(dragHandle.style.left).toBe('114px');
+        expect(dragHandle.style.left).toBe('116px');
     });
 
     it('should size selection to value', () => {
@@ -62,7 +62,7 @@ describe('SliderModel', () => {
         model.positionHandle(dragHandle);
         model.positionSelection(dragHandle, selection);
 
-        expect(selection.style.width).toBe('48px');
+        expect(selection.style.width).toBe('49px');
     });
 
     describe('with reversed direction', () => {
@@ -72,14 +72,14 @@ describe('SliderModel', () => {
 
         it('should position handle at value', () => {
             model.positionHandle(dragHandle);
-            expect(dragHandle.style.left).toBe('65px');
+            expect(dragHandle.style.left).toBe('66px');
         });
 
         it('should position handle at min value', () => {
             props.value = 0;
 
             model.positionHandle(dragHandle);
-            expect(dragHandle.style.left).toBe('114px');
+            expect(dragHandle.style.left).toBe('116px');
         });
 
         it('should position handle at max value', () => {
@@ -97,7 +97,7 @@ describe('SliderModel', () => {
             model.positionHandle(dragHandle);
             model.positionSelection(dragHandle, selection);
 
-            expect(selection.style.width).toBe('49px');
+            expect(selection.style.width).toBe('50px');
         });
     });
 });
