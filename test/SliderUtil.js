@@ -3,7 +3,7 @@ import SliderUtil from '../src/SliderUtil';
 describe('SliderUtil', () => {
     it('calculate slider track width', () => {
         const width = SliderUtil.calculateTrackSize(130, 34);
-        expect(width).toEqual(60);
+        expect(width).toEqual(62);
     });
 
     it('calculate ticks count with default values', () => {
