@@ -1,15 +1,14 @@
 {
   "name": "@telerik/kendo-inputs-common",
-  "version": "0.0.0-semantically-released",
   "description": "Kendo UI Inputs common package",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/telerik/kendo-inputs-common.git"
-  },
+  "author": "Telerik",
+  "license": "Apache-2.0",
+  "version": "0.0.0-semantically-released",
   "main": "dist/npm/main.js",
   "module": "dist/es/main.js",
   "jsnext:main": "dist/es/main.js",
-  "typings": "dist/es/main",
+  "es2015": "dist/es2015/main.js",
+  "typings": "dist/npm/main.d.ts",
   "scripts": {
     "build-package": "gulp build-rollup-package",
     "test": "gulp test",
@@ -22,7 +21,7 @@
   "dependencies": {},
   "devDependencies": {
     "@telerik/eslint-config": "^1.0.0",
-    "@telerik/kendo-package-tasks": "^1.0.0",
+    "@telerik/kendo-package-tasks": "^2.0.0",
     "@telerik/semantic-prerelease": "^1.0.0",
     "cz-conventional-changelog": "^1.1.5",
     "ghooks": "^1.0.3",
@@ -30,8 +29,6 @@
     "semantic-release": "^6.3.6",
     "validate-commit-msg": "^1.1.1"
   },
-  "author": "Telerik",
-  "license": "Apache-2.0",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
@@ -56,6 +53,10 @@
       "warnOnFail": false,
       "maxSubjectLength": 100
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/telerik/kendo-inputs-common.git"
   },
   "release": {
     "debug": false,
