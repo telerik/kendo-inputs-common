@@ -67,12 +67,13 @@ class SwitchController {
                 this.handlePosition = position;
                 this.updateView(this.updateModel(this.handlePosition));
             }
+
             if (pageX > right) {
                 this.updateView(this.updateModel(this.reverse ? 0 : this.constrain));
             }
 
             if (pageX < left) {
-                this.updateView(this.updateModel(this.reverse ? 0 : this.constrain));
+                this.updateView(this.updateModel(this.reverse ? this.constrain : 0));
             }
         };
     }
