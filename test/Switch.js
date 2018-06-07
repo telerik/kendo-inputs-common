@@ -98,24 +98,6 @@ describe('SwitchController', () => {
         expect(value).toBe(true);
     });
 
-    it('onDrag updates model correctly', () => {
-        let model = null;
-        const updateView = (args) => {
-            model = args;
-        };
-        const change = () => { /*noop*/ };
-
-        const controller = new SwitchController(updateView, change);
-        controller.updateState({
-            wrapperOffset: 60,
-            handleOffset: 20
-        });
-        controller.onPress({ pageX: 5 });
-        controller.onRelease({ pageX: 10 });
-        expect(model.handle.transition).toEqual(true);
-        expect(model.handle.transform).toEqual('translateX(0px)');
-    });
-
     it('should calculate transform', () => {
         let model = null;
         const updateView = (args) => { model = args; };
@@ -195,6 +177,85 @@ describe('SwitchController', () => {
             expect(model.handle.transform).toEqual('translateX(30px)');
         });
 
+    });
+
+    describe('drag', () => {
+        let spy, controller;
+
+        function modelTransform(index) {
+            return spy.calls.argsFor(index)[0].handle.transform;
+        }
+
+        function setup(state) {
+            spy = jasmine.createSpy('update');
+
+            controller = new SwitchController(spy, () => { /*noop*/ });
+            controller.updateState(Object.assign({
+                wrapperOffset: 60,
+                handleOffset: 30,
+                coords: {
+                    left: 20,
+                    right: 80
+                },
+                handleMargin: 0,
+                reverse: false,
+                checked: false
+            }, state));
+        }
+
+        it('press and release updates model', () => {
+            setup();
+            controller.onPress({ pageX: 5 });
+            controller.onRelease({ pageX: 5 });
+
+            expect(modelTransform(1)).toEqual('translateX(30px)');
+
+            controller.onPress({ pageX: 5 });
+            controller.onRelease({ pageX: 5 });
+
+            expect(modelTransform(2)).toEqual('translateX(0px)');
+        });
+
+        it('drag updates model', () => {
+            setup();
+
+            controller.onPress({ pageX: 20 });
+            controller.onDrag({ pageX: 35 });
+
+            expect(modelTransform(1)).toEqual('translateX(15px)');
+        });
+
+        it('drag moves to start position if current position is before the start', () => {
+            setup();
+
+            controller.onDrag({ pageX: 5 });
+
+            expect(modelTransform(1)).toEqual('translateX(0px)');
+        });
+
+        it('drag moves to start position if current position is before the start(reverse)', () => {
+            setup({ reverse: true });
+
+            controller.onPress({ pageX: 20 });
+            controller.onDrag({ pageX: 5 });
+
+            expect(modelTransform(1)).toEqual('translateX(0px)');
+        });
+
+        it('drag moves to end position if current position is after the end', () => {
+            setup();
+            controller.onDrag({ pageX: 90 });
+
+            expect(modelTransform(1)).toEqual('translateX(30px)');
+        });
+
+        it('drag moves to end position if current position is after the end(reverse)', () => {
+            setup({ reverse: true });
+
+            controller.onDrag({ pageX: 90 });
+
+            expect(modelTransform(1)).toEqual('translateX(30px)');
+        });
     });
 });
 
