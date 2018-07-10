@@ -2,7 +2,7 @@ declare class SwitchController {
     constructor(updateView: any, onChange: any);
     updateState(props: any): void;
     change(checked: boolean): void;
-    updateModel(position: number, animate: boolean): void;
+    updateModel(position: number, animate?: boolean): any;
     constrain(): number;
     limit(value: number): number;
     onPress(pageX: any): void;
