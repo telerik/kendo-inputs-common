@@ -1,9 +1,0 @@
-docs
-test
-examples
-src
-tmp
-gulpfile.js
-.npmignore
-.eslintrc.json
-.travis.yml
