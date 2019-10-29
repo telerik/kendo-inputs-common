@@ -22,7 +22,7 @@
   "devDependencies": {
     "@telerik/eslint-config": "^1.0.0",
     "@telerik/kendo-package-tasks": "^2.0.0",
-    "@telerik/semantic-prerelease": "^1.0.0",
+    "@telerik/semantic-prerelease": "^1.3.3",
     "cz-conventional-changelog": "^1.1.5",
     "ghooks": "^1.0.3",
     "gulp": "3.9.0",
@@ -71,5 +71,6 @@
     "getLastRelease": "@telerik/semantic-prerelease/getLastRelease",
     "verifyConditions": "@telerik/semantic-prerelease/verifyConditions",
     "verifyRelease": "@telerik/semantic-prerelease/verifyRelease"
-  }
+  },
+  "files": ["dist"]
 }
