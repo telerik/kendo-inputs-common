@@ -28,7 +28,7 @@ jobs:
         npm run build-package
     - name: Test
       run: |
-        npm run test
+        CHROME_BIN=`which chrome` NO_SANDBOX=true ENV_BROWSER=Chrome_headless npm run test
     - name: Release
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
       env:
