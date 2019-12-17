@@ -24,9 +24,9 @@ resources:
       versionTemplate:
         sourceName:       telerik/kendo-inputs-common
         branch:           develop
-    - name: shippable-push-public-repos-inputs-common
+    - name: shippable-inputs-common-push
       type: integration
-      integration: shippable-push-public-repos
+      integration: shippable-inputs-common
 
 jobs:
   - name: kendo-inputs-common-publish_develop_as_latest
@@ -36,11 +36,11 @@ jobs:
         switch: off
       - IN: kendo-inputs-common_ciRepo
         switch: off
-      - IN: shippable-push-public-repos-inputs-common
+      - IN: shippable-inputs-common-push
         switch: off
       - TASK:
           name: kendo-inputs-common-publish_develop
           script:
-            - ssh-add $SHIPPABLEPUSHPUBLICREPOSINPUTSCOMMON_PRIVATE_KEY_PATH
+            - ssh-add $SHIPPABLEINPUTSCOMMONPUSH_PRIVATE_KEY_PATH
             - cd $KENDOINPUTSCOMMONREPO_STATE && git remote set-url --push origin git@github.com:telerik/kendo-inputs-common.git && git checkout master && git pull --rebase
             - npm install @telerik/semantic-prerelease@1 --no-save && npx release-master
