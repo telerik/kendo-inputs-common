@@ -42,7 +42,6 @@ describe('SliderModel', () => {
 
     it('should position handle at min value', () => {
         props.value = 0;
-
         model.positionHandle(dragHandle);
         expect(dragHandle.style.left).toBe('-8px');
     });
