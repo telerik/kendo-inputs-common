@@ -1,0 +1,7 @@
+{
+  "tasks": [
+    "npm run lint",
+    "npm run api-check",
+    "nice npm run test"
+  ]
+}

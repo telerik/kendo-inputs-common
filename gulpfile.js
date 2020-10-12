@@ -1,1 +1,5 @@
-require('@progress/kendo-package-tasks')(require('gulp'), 'kendo-inputs-common');
+/* jshint esnext: true */
+
+const gulp = require('gulp');
+
+require('@progress/kendo-typescript-tasks')(gulp, 'kendo-inputs-common');
